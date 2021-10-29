@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, } from 'react-router-dom'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Session from './pages/Session'
+import Question from './pages/Question'
 import './App.css'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Route path="/register" component={Register} />
       <Route path="/login" component={Login} />
       <Route path="/session" component={Session} />
+      <Route path="/question" component={Question} />
     </Router>
   )
 }

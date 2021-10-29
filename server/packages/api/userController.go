@@ -5,6 +5,7 @@ import (
 	"goapp/packages/config"
 	"goapp/packages/db"
 	"goapp/packages/utils"
+	"math/rand"
 	"net/http"
 	"time"
 
@@ -62,6 +63,36 @@ func Session(c *fiber.Ctx, dbConn *sql.DB) error {
 	}
 	user.Password = ""
 	return c.JSON(&fiber.Map{"success": true, "user": user})
+}
+
+func getQuestion(user *db.User) string {
+	questions := make([]string, 0)
+	questions = append(questions,
+		"What is the idea?",
+		"What problem does this solve?",
+		"How frequently does the client have the problem?")
+	rand.Seed(time.Now().Unix()) // initialize global pseudo random generator
+	return questions[rand.Intn(len(questions))]
+}
+
+func Question(c *fiber.Ctx, dbConn *sql.DB) error {
+	tokenUser := c.Locals("user").(*jwt.Token)
+	claims := tokenUser.Claims.(jwt.MapClaims)
+	userID, ok := claims["id"].(string)
+
+	if !ok {
+		return c.SendStatus(http.StatusUnauthorized)
+	}
+
+	user := &db.User{}
+	if err := dbConn.QueryRow(db.GetUserByIDQuery, userID).
+		Scan(&user.ID, &user.Name, &user.Password, &user.Email, &user.CreatedAt, &user.UpdatedAt); err != nil {
+		if err == sql.ErrNoRows {
+			return c.Status(http.StatusUnauthorized).JSON(fiber.Map{"success": false, "errors": []string{"Incorrect credentials"}})
+		}
+	}
+	user.Password = ""
+	return c.JSON(&fiber.Map{"success": true, "question": getQuestion(user)})
 }
 
 func Login(c *fiber.Ctx, dbConn *sql.DB) error {
