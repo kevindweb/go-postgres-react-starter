@@ -16,8 +16,10 @@ func ConnectDB() (*sql.DB, error) {
 	user := config.Config[config.POSTGRES_USER]
 	database := config.Config[config.POSTGRES_DB]
 	host := config.Config[config.POSTGRES_SERVER_HOST]
+	password := config.Config[config.POSTGRES_PASSWORD]
 
-	connString := fmt.Sprintf("postgresql://%s@%s:5432/%s?sslmode=disable", user, host, database)
+	// connString := fmt.Sprintf("postgresql://%s@%s:5432/%s?sslmode=disable", user, host, database)
+	connString := fmt.Sprintf("host=%s port=5432 user=%s password=%s dbname=%s sslmode=disable", host, user, password, database)
 
 	db, _ := sql.Open("postgres", connString)
 	if err := db.Ping(); err != nil {

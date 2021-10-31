@@ -1,0 +1,25 @@
+{
+    "questions": [
+        {
+            "q": "What is your idea?",
+            "first": true
+        },
+        {
+            "q": "Can you talk about your business idea?",
+            "first": true
+        },
+        {
+            "q": "What problem does this solve?"
+        },
+        {
+            "q": "Is it technically feasible?"
+        },
+        {
+            "q": "Do you have the skills/connections to solve it?"
+        },
+        {
+            "q": "How frequently does the client have the problem?"
+        }
+    ],
+    "version": "0.0.1"
+}

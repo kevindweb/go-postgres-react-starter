@@ -65,13 +65,31 @@ func Session(c *fiber.Ctx, dbConn *sql.DB) error {
 	return c.JSON(&fiber.Map{"success": true, "user": user})
 }
 
-func getQuestion(user *db.User) string {
-	questions := make([]string, 0)
-	questions = append(questions,
-		"What is the idea?",
-		"What problem does this solve?",
-		"How frequently does the client have the problem?")
+func parseQuestions(fileName string) string {
+	return "test"
+}
+
+var questions = parseQuestions("questions/questions.json")
+
+func getQuestion(user *db.User, initialRequest string) string {
 	rand.Seed(time.Now().Unix()) // initialize global pseudo random generator
+	questions := make([]string, 0)
+	initialQuestions := make([]string, 0)
+
+	// on reload, we start a new line of questioning
+	initialQuestions = append(initialQuestions,
+		"What is your idea?",
+		"Can you talk about your business idea?")
+	if initialRequest == "true" {
+		return initialQuestions[rand.Intn(len(initialQuestions))]
+	}
+
+	questions = append(questions,
+		"What problem does this solve?",
+		"Is it technically feasible?",
+		"Do you have the skills/connections to solve it?",
+		"How frequently does the client have the problem?")
+
 	return questions[rand.Intn(len(questions))]
 }
 
@@ -92,7 +110,8 @@ func Question(c *fiber.Ctx, dbConn *sql.DB) error {
 		}
 	}
 	user.Password = ""
-	return c.JSON(&fiber.Map{"success": true, "question": getQuestion(user)})
+	firstRequest := c.Query("first")
+	return c.JSON(&fiber.Map{"success": true, "question": getQuestion(user, firstRequest)})
 }
 
 func Login(c *fiber.Ctx, dbConn *sql.DB) error {

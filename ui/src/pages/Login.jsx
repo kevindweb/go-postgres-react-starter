@@ -40,7 +40,8 @@ export default ({ history }) => {
         // ordinarily the setcookie from the server should suffice, however it has to be created here manually to bypass browsers
         // restriction on cross-site/non secure cookies on localhost.
         createCookie("token", token, 0.5)
-        history.push({ pathname: "/session", state: user })
+        // history.push({ pathname: "/session", state: user })
+        history.push({ pathname: "/question", state: user })
       }
       setErrors(errors)
     } catch (e) {
