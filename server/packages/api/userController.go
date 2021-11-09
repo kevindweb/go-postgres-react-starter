@@ -134,8 +134,8 @@ func Login(c *fiber.Ctx, dbConn *sql.DB) error {
 		return c.Status(http.StatusUnauthorized).JSON(fiber.Map{"success": false, "errors": []string{"Incorrect credentials"}})
 	}
 
-	//expiration time of the token ->30 mins
-	expirationTime := time.Now().Add(30 * time.Minute)
+	//expiration time of the token ->60 mins
+	expirationTime := time.Now().Add(60 * time.Minute)
 
 	user.Password = ""
 	claims := &Claims{

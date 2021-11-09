@@ -6,12 +6,16 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
     "eslint-plugin-prettier": "^4.0.0",
+    "ionicons": "^5.5.4",
     "material-ui-search-bar": "^1.0.0",
+    "moment": "^2.23.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-simple-chatbot": "^0.6.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,6 +46,7 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-react": "^7.26.1"
+    "eslint-plugin-react": "^7.26.1",
+    "shave": "^2.5.4"
   }
 }
